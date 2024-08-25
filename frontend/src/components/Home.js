@@ -1,13 +1,22 @@
 // frontend/src/components/Home.js
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import Register from './Register';
 
 const Home = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
-    const [username, setUsername] = useState(null);
+    const [username, setUsername] = useState(localStorage.getItem('username') || null);
     const [successMessage, setSuccessMessage] = useState('');
+
+    useEffect(() => {
+        // Check if a user is already logged in when the component mounts
+        const storedUsername = localStorage.getItem('username');
+        if (storedUsername) {
+            setUsername(storedUsername);
+        }
+    }, []);
 
     const handleLogin = (user) => {
         setUsername(user);
@@ -17,6 +26,7 @@ const Home = () => {
 
     const handleLogout = () => {
         setUsername(null);
+        localStorage.removeItem('username'); // Remove username from localStorage
     };
 
     const handleRegisterSuccess = () => {
