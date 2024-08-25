@@ -1,12 +1,11 @@
 // frontend/src/App.js
 import React from 'react';
-import Login from './components/Login';
+import Home from './components/Home';
 
 function App() {
     return (
         <div className="App">
-            <h1>Login Page</h1>
-            <Login />
+            <Home />
         </div>
     );
 }
