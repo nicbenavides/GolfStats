@@ -18,14 +18,14 @@ def register():
 @auth.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    user = User.query.filter_by(email=data['email']).first()
+    user = User.query.filter_by(username=data['username']).first()
     if user and bcrypt.check_password_hash(user.password, data['password']):
         login_user(user)
-        return jsonify({"message": "Login successful"}), 200
+        return jsonify({"message": "Login successful", "username": user.username}), 200
     else:
-        return jsonify({"message": "Login failed"}), 401
+        return jsonify({"message": "Incorrect username and/or password"}), 401
 
-@auth.route('/logout')
+@auth.route('/logout', methods=['POST'])
 @login_required
 def logout():
     logout_user()

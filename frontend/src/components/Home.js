@@ -2,24 +2,44 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
+import Logout from './Logout';
 
 const Home = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
+    const [username, setUsername] = useState(null);
+
+    const handleLogin = (user) => {
+        setUsername(user);
+        setShowLogin(false);
+    };
+
+    const handleLogout = () => {
+        setUsername(null);
+    };
 
     return (
         <div className="home">
             <h1>Welcome to GolfStats!</h1>
-            <button onClick={() => setShowLogin(true)} style={styles.button}>
-                Login
-            </button>
-            <button onClick={() => setShowRegister(true)} style={styles.button}>
-                Create New User
-            </button>
+            {!username ? (
+                <>
+                    <button onClick={() => setShowLogin(true)} style={styles.button}>
+                        Login
+                    </button>
+                    <button onClick={() => setShowRegister(true)} style={styles.button}>
+                        Create New User
+                    </button>
+                </>
+            ) : (
+                <div>
+                    <span>Welcome, {username}!</span>
+                    <Logout onLogout={handleLogout} />
+                </div>
+            )}
 
             {showLogin && (
                 <div style={styles.modal}>
-                    <Login />
+                    <Login onLogin={handleLogin} />
                     <button onClick={() => setShowLogin(false)}>Close</button>
                 </div>
             )}
