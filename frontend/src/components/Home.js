@@ -22,11 +22,11 @@ const Home = () => {
     const handleRegisterSuccess = () => {
         setShowRegister(false);
         setSuccessMessage('User created successfully');
-        setShowLogin(true); // Show login modal after successful registration
+        setShowLogin(true);
     };
 
     return (
-        <div className="home">
+        <div>
             <h1>Welcome to GolfStats!</h1>
             {!username ? (
                 <>
@@ -47,14 +47,14 @@ const Home = () => {
             {showLogin && (
                 <div style={styles.modal}>
                     <Login onLogin={handleLogin} successMessage={successMessage} />
-                    <button onClick={() => setShowLogin(false)}>Close</button>
+                    <button onClick={() => setShowLogin(false)} style={styles.closeButton}>Close</button>
                 </div>
             )}
 
             {showRegister && (
                 <div style={styles.modal}>
                     <Register onRegisterSuccess={handleRegisterSuccess} />
-                    <button onClick={() => setShowRegister(false)}>Close</button>
+                    <button onClick={() => setShowRegister(false)} style={styles.closeButton}>Close</button>
                 </div>
             )}
         </div>
@@ -66,6 +66,10 @@ const styles = {
         margin: '10px',
         padding: '10px',
         cursor: 'pointer',
+        backgroundColor: '#007bff',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '5px',
     },
     modal: {
         position: 'fixed',
@@ -77,6 +81,15 @@ const styles = {
         border: '1px solid #ddd',
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         zIndex: 1000,
+    },
+    closeButton: {
+        marginTop: '10px',
+        padding: '10px',
+        cursor: 'pointer',
+        backgroundColor: '#dc3545',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '5px',
     },
 };
 
