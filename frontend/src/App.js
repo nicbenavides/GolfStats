@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
+// frontend/src/App.js
+import React from 'react';
+import Login from './components/Login';
 
 function App() {
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        fetch('/api/data')
-            .then((response) => response.json())
-            .then((data) => setData(data.message));
-    }, []);
-
     return (
         <div className="App">
-            <h1>{data}</h1>
+            <h1>Login Page</h1>
+            <Login />
         </div>
     );
 }
