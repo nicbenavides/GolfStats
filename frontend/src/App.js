@@ -5,6 +5,8 @@ import Home from './components/Home';
 import AboutUs from './components/AboutUs';
 import ContactUs from './components/ContactUs';
 import Layout from './components/Layout';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
     return (

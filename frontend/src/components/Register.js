@@ -1,6 +1,4 @@
-// frontend/src/components/Register.js
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Register = ({ onRegisterSuccess }) => {
     const [username, setUsername] = useState('');
@@ -10,46 +8,51 @@ const Register = ({ onRegisterSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await axios.post('/auth/register', { username, email, password });
-            onRegisterSuccess(); // Notify parent component of successful registration
-        } catch (error) {
-            setError('Registration failed: ' + (error.response?.data?.message || 'Unknown error'));
+
+        const response = await fetch('/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password }),
+        });
+
+        if (response.ok) {
+            onRegisterSuccess();
+        } else {
+            const data = await response.json();
+            setError(data.error || 'Failed to register');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Username:</label>
+        <div>
+            {error && <div className="alert alert-danger">{error}</div>}
+            <form onSubmit={handleSubmit}>
                 <input
                     type="text"
+                    placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    required
+                    className="form-control mb-2"
                 />
-            </div>
-            <div>
-                <label>Email:</label>
                 <input
                     type="email"
+                    placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
+                    className="form-control mb-2"
                 />
-            </div>
-            <div>
-                <label>Password:</label>
                 <input
                     type="password"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
+                    className="form-control mb-2"
                 />
-            </div>
-            <button type="submit">Register</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </form>
+                <button type="submit" className="btn btn-primary">Register</button>
+            </form>
+        </div>
     );
 };
 

@@ -1,5 +1,4 @@
 // frontend/src/components/Home.js
-
 import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import Register from './Register';
@@ -11,7 +10,6 @@ const Home = () => {
     const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
-        // Check if a user is already logged in when the component mounts
         const storedUsername = localStorage.getItem('username');
         if (storedUsername) {
             setUsername(storedUsername);
@@ -26,7 +24,7 @@ const Home = () => {
 
     const handleLogout = () => {
         setUsername(null);
-        localStorage.removeItem('username'); // Remove username from localStorage
+        localStorage.removeItem('username');
     };
 
     const handleRegisterSuccess = () => {
@@ -37,70 +35,56 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Welcome to GolfStats!</h1>
+            <h1 className="mb-4">Welcome to GolfStats!</h1>
             {!username ? (
                 <>
-                    <button onClick={() => setShowLogin(true)} style={styles.button}>
+                    <button onClick={() => setShowLogin(true)} className="btn btn-primary me-2">
                         Login
                     </button>
-                    <button onClick={() => setShowRegister(true)} style={styles.button}>
+                    <button onClick={() => setShowRegister(true)} className="btn btn-secondary">
                         Create New User
                     </button>
                 </>
             ) : (
                 <div>
-                    <span>Welcome, {username}!</span>
-                    <button onClick={handleLogout}>Logout</button>
+                    <span className="me-2">Welcome, {username}!</span>
+                    <button onClick={handleLogout} className="btn btn-danger">Logout</button>
                 </div>
             )}
 
             {showLogin && (
-                <div style={styles.modal}>
-                    <Login onLogin={handleLogin} successMessage={successMessage} />
-                    <button onClick={() => setShowLogin(false)} style={styles.closeButton}>Close</button>
+                <div className="modal show d-block" tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Login</h5>
+                                <button type="button" className="btn-close" onClick={() => setShowLogin(false)}></button>
+                            </div>
+                            <div className="modal-body">
+                                <Login onLogin={handleLogin} successMessage={successMessage} />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
 
             {showRegister && (
-                <div style={styles.modal}>
-                    <Register onRegisterSuccess={handleRegisterSuccess} />
-                    <button onClick={() => setShowRegister(false)} style={styles.closeButton}>Close</button>
+                <div className="modal show d-block" tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Register</h5>
+                                <button type="button" className="btn-close" onClick={() => setShowRegister(false)}></button>
+                            </div>
+                            <div className="modal-body">
+                                <Register onRegisterSuccess={handleRegisterSuccess} />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
     );
-};
-
-const styles = {
-    button: {
-        margin: '10px',
-        padding: '10px',
-        cursor: 'pointer',
-        backgroundColor: '#007bff',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '5px',
-    },
-    modal: {
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        background: '#fff',
-        padding: '20px',
-        border: '1px solid #ddd',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        zIndex: 1000,
-    },
-    closeButton: {
-        marginTop: '10px',
-        padding: '10px',
-        cursor: 'pointer',
-        backgroundColor: '#dc3545',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '5px',
-    },
 };
 
 export default Home;
