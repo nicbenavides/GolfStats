@@ -2,20 +2,27 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
-import Logout from './Logout';
 
 const Home = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
     const [username, setUsername] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleLogin = (user) => {
         setUsername(user);
         setShowLogin(false);
+        setSuccessMessage('');
     };
 
     const handleLogout = () => {
         setUsername(null);
+    };
+
+    const handleRegisterSuccess = () => {
+        setShowRegister(false);
+        setSuccessMessage('User created successfully');
+        setShowLogin(true); // Show login modal after successful registration
     };
 
     return (
@@ -33,20 +40,20 @@ const Home = () => {
             ) : (
                 <div>
                     <span>Welcome, {username}!</span>
-                    <Logout onLogout={handleLogout} />
+                    <button onClick={handleLogout}>Logout</button>
                 </div>
             )}
 
             {showLogin && (
                 <div style={styles.modal}>
-                    <Login onLogin={handleLogin} />
+                    <Login onLogin={handleLogin} successMessage={successMessage} />
                     <button onClick={() => setShowLogin(false)}>Close</button>
                 </div>
             )}
 
             {showRegister && (
                 <div style={styles.modal}>
-                    <Register />
+                    <Register onRegisterSuccess={handleRegisterSuccess} />
                     <button onClick={() => setShowRegister(false)}>Close</button>
                 </div>
             )}

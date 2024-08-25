@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = ({ onLogin }) => {
-    const [username, setUsername] = useState('')
+const Login = ({ onLogin, successMessage }) => {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -19,10 +19,11 @@ const Login = ({ onLogin }) => {
 
     return (
         <form onSubmit={handleSubmit}>
+            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
             <div>
                 <label>Username:</label>
                 <input
-                    type="username"
+                    type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required

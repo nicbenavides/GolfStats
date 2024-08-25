@@ -2,18 +2,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Register = () => {
+const Register = ({ onRegisterSuccess }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.post('/auth/register', { username, email, password });
-            alert('User created successfully');
+            onRegisterSuccess(); // Notify parent component of successful registration
         } catch (error) {
-            console.error('Registration failed:', error.response.data.message);
+            setError('Registration failed: ' + (error.response?.data?.message || 'Unknown error'));
         }
     };
 
@@ -47,6 +48,7 @@ const Register = () => {
                 />
             </div>
             <button type="submit">Register</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>
     );
 };
