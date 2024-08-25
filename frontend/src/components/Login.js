@@ -24,7 +24,7 @@ const Login = ({ onLogin, successMessage }) => {
             localStorage.setItem('username', data.username); // Store username in localStorage
             onLogin(data.username);
         } else {
-            setError('Invalid credentials');
+            setError('Invalid credentials: Username and/or Password is Incorrect');
         }
     };
 
