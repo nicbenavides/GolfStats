@@ -62,14 +62,11 @@ const Layout = ({ children }) => {
                         <button onClick={() => setShowLogin(true)} className="btn btn-primary me-2">
                             Login
                         </button>
-                        <button onClick={() => setShowRegister(true)} className="btn btn-secondary">
-                            Create New User
-                        </button>
                     </>
                 ) : (
-                    <div>
-                        <span className="me-2">Welcome, {username}!</span>
-                        <button onClick={handleLogout} className="btn btn-danger">Logout</button>
+                    <div className="d-flex align-items-center">
+                        <span className="me-2 text-white">{username}</span>
+                        <button onClick={handleLogout} className="btn btn-danger me-2">Logout</button>
                     </div>
                 )}
 
@@ -83,6 +80,9 @@ const Layout = ({ children }) => {
                                 </div>
                                 <div className="modal-body">
                                     <Login onLogin={handleLogin} successMessage={successMessage} />
+                                    <div className="text-center mt-2">
+                                        <Link to="#" onClick={() => setShowRegister(true)}>Create a new account</Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
